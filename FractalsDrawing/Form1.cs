@@ -26,36 +26,30 @@ namespace FractalsDrawing
 
             canvas.BackColor = Color.CornflowerBlue;
 
-            DrawTree(x:Width / 2, y: Height, width: 0, height: -80, angle: 8, branchNumber: 0, numberOfBranches: 15);
+            DrawTree(Width / 2, Height, -50, -1, 0, 20, 0, 8);
             canvas.Image = backBuffer;
         }
-
-        private void DrawTree(int x, int y, decimal width, decimal height, int angle, int branchNumber, int numberOfBranches)
+        private void DrawTree(float x, float y, float branchLength, float decreaseBranchLengthBy, float angle, int incrementAngleBy, int branchNumber, int numberOfBranches)
         {
-
             Pen pen = new Pen(Brushes.White, 2);
 
-            graphics.DrawLine(pen, x, y, (float)(x + width), (float)(y + height));
+            double angleInRadians = (double)(angle * (Math.PI / 180f));
+            float x2 = (float)(branchLength * Math.Sin(angleInRadians));
+            float y2 = (float)(branchLength * Math.Cos(angleInRadians));
+
+            graphics.DrawLine(pen, x, y, x + x2, y + y2);
 
             if (branchNumber >= numberOfBranches)
             {
                 return;
             }
 
-            double angleInRadians = (double)(angle * (decimal)(Math.PI / 180f));
-
-            decimal newWidth = (height * (decimal)Math.Sin(angleInRadians));
-            decimal newHeight = (height * (decimal)Math.Cos(angleInRadians));
-
-            int newX = (int)width;
-            int newY = (int)height;
-
             branchNumber++;
-            DrawTree(x + newX, y + newY, newWidth, newHeight, angle + angle, branchNumber, numberOfBranches);
+            DrawTree(x + x2, y + y2, branchLength - decreaseBranchLengthBy, decreaseBranchLengthBy, angle + incrementAngleBy, incrementAngleBy, branchNumber, numberOfBranches);
 
-            newWidth = -newWidth;
-            branchNumber++;
-            DrawTree(x + newX, y + newY, newWidth, newHeight, angle + angle, branchNumber, numberOfBranches);
+            DrawTree(x + x2, y + y2, branchLength - decreaseBranchLengthBy, decreaseBranchLengthBy, angle - incrementAngleBy, incrementAngleBy, branchNumber, numberOfBranches);
+
         }
+       
     }
 }
