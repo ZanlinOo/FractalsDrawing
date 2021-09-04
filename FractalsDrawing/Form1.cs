@@ -26,7 +26,7 @@ namespace FractalsDrawing
 
             canvas.BackColor = Color.CornflowerBlue;
 
-            DrawTree(Width / 2, Height, -50, -1, 0, 20, 0, 8);
+            DrawTree(Width / 2, Height, -80, -7f, 0, 20, 0, 8);
             canvas.Image = backBuffer;
         }
         private void DrawTree(float x, float y, float branchLength, float decreaseBranchLengthBy, float angle, int incrementAngleBy, int branchNumber, int numberOfBranches)
